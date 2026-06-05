@@ -19,6 +19,8 @@ const API_BASE =
 export function App() {
   const [siteStatus, setSiteStatus] = useState<"active" | "maintenance" | null>(null);
   const [banner, setBanner] = useState("");
+  const [bannerBg, setBannerBg] = useState("#18181b");
+  const [bannerTextColor, setBannerTextColor] = useState("#ffffff");
 
   useEffect(() => {
     fetch(`${API_BASE}/api/update-store-status`)
@@ -28,6 +30,8 @@ export function App() {
         if (store) {
           setSiteStatus(store.status === "maintenance" ? "maintenance" : "active");
           setBanner(store.banner?.trim() ?? "");
+          setBannerBg(store.bannerBg ?? "#18181b");
+          setBannerTextColor(store.bannerTextColor ?? "#ffffff");
         } else {
           setSiteStatus("active");
         }
@@ -46,7 +50,7 @@ export function App() {
             <MaintenancePage />
           ) : (
             <>
-              {banner && <SiteBanner message={banner} />}
+              {banner && <SiteBanner message={banner} bgColor={bannerBg} textColor={bannerTextColor} />}
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/quiz" element={<QuizPage />} />

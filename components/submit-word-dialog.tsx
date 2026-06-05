@@ -67,6 +67,7 @@ export function SubmitWordDialog() {
           kuwaitiWord: form.word.trim(),
           arabicMeaning: form.meaningAr.trim(),
           englishMeaning: form.meaningEn.trim(),
+          pronunciation: form.pronunciation.trim(),
           example: form.example.trim(),
           category: form.category,
         }).unwrap()

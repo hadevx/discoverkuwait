@@ -41,8 +41,8 @@ import { logout, setUserInfo } from "@/src/redux/slices/authSlice";
 import { useLogoutApiMutation, useUpdateUserMutation } from "@/src/redux/queries/userApi";
 
 // All selectable avatars from /public/avatar/
-const AVATARS = [1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18].map(
-  (n) => `${n}.webp`
+const AVATARS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map(
+  (n) => `${n}.webp`,
 );
 
 const BADGE_ICONS: Record<string, LucideIcon> = {
@@ -75,8 +75,10 @@ export function ProfilePage() {
   useEffect(() => {
     fetch(`${API_BASE}/api/quiz`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((data: any[]) => { if (Array.isArray(data)) setAllExams(data) })
-      .catch(() => {})
+      .then((data: any[]) => {
+        if (Array.isArray(data)) setAllExams(data);
+      })
+      .catch(() => {});
   }, []);
 
   const handleLogout = async () => {
@@ -91,7 +93,11 @@ export function ProfilePage() {
     if (!userInfo) return;
     setSavingAvatar(true);
     try {
-      const res = await updateUser({ avatar: avatarPath, name: userInfo.name, email: userInfo.email }).unwrap();
+      const res = await updateUser({
+        avatar: avatarPath,
+        name: userInfo.name,
+        email: userInfo.email,
+      }).unwrap();
       // Merge response into existing userInfo so other fields (streak, etc.) are preserved
       dispatch(setUserInfo({ ...userInfo, ...res }));
       setShowAvatarPicker(false);
@@ -114,7 +120,11 @@ export function ProfilePage() {
     }
     setSavingName(true);
     try {
-      const res = await updateUser({ name: trimmed, avatar: userInfo?.avatar, email: userInfo?.email }).unwrap();
+      const res = await updateUser({
+        name: trimmed,
+        avatar: userInfo?.avatar,
+        email: userInfo?.email,
+      }).unwrap();
       dispatch(setUserInfo({ ...userInfo, ...res }));
       setEditingName(false);
     } catch (error: any) {
@@ -194,8 +204,7 @@ export function ProfilePage() {
                   <button
                     onClick={() => setShowAvatarPicker(true)}
                     className="group relative block size-16 rounded-full overflow-hidden border-2 border-border hover:border-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    aria-label="Change avatar"
-                  >
+                    aria-label="Change avatar">
                     {userInfo.avatar ? (
                       <img
                         src={`/avatar/${userInfo.avatar}`}
@@ -226,15 +235,17 @@ export function ProfilePage() {
                       <button
                         type="submit"
                         disabled={savingName}
-                        className="flex items-center justify-center size-7 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
-                      >
-                        {savingName ? <Loader2 className="size-3.5 animate-spin" /> : <Check className="size-3.5" />}
+                        className="flex items-center justify-center size-7 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors">
+                        {savingName ? (
+                          <Loader2 className="size-3.5 animate-spin" />
+                        ) : (
+                          <Check className="size-3.5" />
+                        )}
                       </button>
                       <button
                         type="button"
                         onClick={() => setEditingName(false)}
-                        className="flex items-center justify-center size-7 rounded-md border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-                      >
+                        className="flex items-center justify-center size-7 rounded-md border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
                         <X className="size-3.5" />
                       </button>
                     </form>
@@ -242,11 +253,17 @@ export function ProfilePage() {
                     <div className="flex items-center gap-1.5">
                       <p className="font-bold text-foreground text-lg">{userInfo.name}</p>
                       <button
-                        onClick={() => { setNameInput(userInfo.name); setEditingName(true); }}
+                        onClick={() => {
+                          setNameInput(userInfo.name);
+                          setEditingName(true);
+                        }}
                         disabled={!canChangeName}
-                        title={canChangeName ? "Edit name" : `Available in ${daysUntilNameChange} day${daysUntilNameChange === 1 ? "" : "s"}`}
-                        className="flex items-center justify-center size-5 rounded text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                      >
+                        title={
+                          canChangeName
+                            ? "Edit name"
+                            : `Available in ${daysUntilNameChange} day${daysUntilNameChange === 1 ? "" : "s"}`
+                        }
+                        className="flex items-center justify-center size-5 rounded text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
                         <Pencil className="size-3.5" />
                       </button>
                     </div>
@@ -261,8 +278,7 @@ export function ProfilePage() {
                   )}
                   <button
                     onClick={() => setShowAvatarPicker(true)}
-                    className="mt-1 text-xs text-primary hover:underline font-medium"
-                  >
+                    className="mt-1 text-xs text-primary hover:underline font-medium">
                     {lang === "ar" ? "تغيير الصورة الشخصية" : "Change avatar"}
                   </button>
                 </div>
@@ -422,35 +438,42 @@ export function ProfilePage() {
                     key={exam._id}
                     className={cn(
                       "flex items-center justify-between gap-3 rounded-xl border px-4 py-3 transition-colors",
-                      done
-                        ? "border-chart-3/40 bg-chart-3/5"
-                        : "border-border bg-secondary/20",
+                      done ? "border-chart-3/40 bg-chart-3/5" : "border-border bg-secondary/20",
                     )}>
                     <div className="flex items-center gap-3 min-w-0">
                       {done ? (
                         <CheckCircle2 className="size-5 shrink-0 text-chart-3" aria-hidden="true" />
                       ) : (
-                        <Circle className="size-5 shrink-0 text-muted-foreground/40" aria-hidden="true" />
+                        <Circle
+                          className="size-5 shrink-0 text-muted-foreground/40"
+                          aria-hidden="true"
+                        />
                       )}
                       <div className="min-w-0">
-                        <p className={cn("text-sm font-semibold truncate", done ? "text-foreground" : "text-muted-foreground")}>
+                        <p
+                          className={cn(
+                            "text-sm font-semibold truncate",
+                            done ? "text-foreground" : "text-muted-foreground",
+                          )}>
                           {title}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {exam.questions?.length ?? 0}{" "}
-                          {lang === "ar" ? "أسئلة" : "questions"}
+                          {exam.questions?.length ?? 0} {lang === "ar" ? "أسئلة" : "questions"}
                         </p>
                       </div>
                     </div>
-                    <span className={cn(
-                      "shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold",
-                      done
-                        ? "bg-chart-3/15 text-chart-3"
-                        : "bg-secondary text-muted-foreground",
-                    )}>
+                    <span
+                      className={cn(
+                        "shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold",
+                        done ? "bg-chart-3/15 text-chart-3" : "bg-secondary text-muted-foreground",
+                      )}>
                       {done
-                        ? (lang === "ar" ? "مكتمل" : "Done")
-                        : (lang === "ar" ? "لم يُكتمل" : "Not done")}
+                        ? lang === "ar"
+                          ? "مكتمل"
+                          : "Done"
+                        : lang === "ar"
+                          ? "لم يُكتمل"
+                          : "Not done"}
                     </span>
                   </div>
                 );
@@ -474,8 +497,7 @@ export function ProfilePage() {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div
               className="relative w-full max-w-lg rounded-2xl border border-border bg-background shadow-2xl p-6"
-              onClick={(e) => e.stopPropagation()}
-            >
+              onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-lg font-extrabold text-foreground">
                   {lang === "ar" ? "اختر صورة شخصية" : "Choose your avatar"}
@@ -483,8 +505,7 @@ export function ProfilePage() {
                 <button
                   onClick={() => setShowAvatarPicker(false)}
                   disabled={savingAvatar}
-                  className="rounded-full p-1.5 hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors disabled:opacity-40"
-                >
+                  className="rounded-full p-1.5 hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors disabled:opacity-40">
                   <X className="size-4" />
                 </button>
               </div>
@@ -510,8 +531,7 @@ export function ProfilePage() {
                           ? "border-primary ring-2 ring-primary ring-offset-2 scale-105"
                           : "border-transparent hover:border-primary/50 hover:scale-105",
                       )}
-                      aria-label={`Avatar ${src}`}
-                    >
+                      aria-label={`Avatar ${src}`}>
                       <img
                         src={`/avatar/${src}`}
                         alt=""

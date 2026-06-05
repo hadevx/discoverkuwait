@@ -28,7 +28,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-        <Link to="/" className="flex shrink-0 items-center gap-3">
+        <Link to="/" className="hidden md:flex shrink-0 items-center gap-3">
           <div className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
             <MapPin className="size-5" aria-hidden="true" />
           </div>
@@ -48,14 +48,14 @@ export function SiteHeader() {
                 key={item.href}
                 to={item.href}
                 className={cn(
-                  "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors sm:text-sm",
+                  "flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold transition-colors sm:text-sm",
                   active
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground",
                 )}>
-                <Icon className="size-4" aria-hidden="true" />
+                <Icon className="size-5" aria-hidden="true" />
 
-                <span className="max-sm:hidden">{item.label}</span>
+                <span className="">{item.label}</span>
               </Link>
             );
           })}
@@ -65,7 +65,7 @@ export function SiteHeader() {
           <div
             className="hidden items-center gap-1.5 rounded-full border border-border bg-accent/20 px-3 py-1.5 text-sm font-bold text-accent-foreground md:flex"
             title={t.totalPoints}>
-            <Gem className="size-4" aria-hidden="true" />
+            <Gem className="size-6" aria-hidden="true" />
             {ready ? derived.totalPoints : 0}
           </div>
 

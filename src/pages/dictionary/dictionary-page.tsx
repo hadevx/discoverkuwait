@@ -16,7 +16,7 @@ function toDialectWord(w: any): DialectWord {
   return {
     id: w._id,
     word: w.kuwaitiWord,
-    pronunciation: "",
+    pronunciation: w.pronunciation || "",
     meaningAr: w.arabicMeaning,
     meaningEn: w.englishMeaning,
     exampleAr: w.example || "",

@@ -55,12 +55,24 @@ export function HomePage() {
       </section>
 
       {/* Map + detail */}
-      <main id="map" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-10 sm:px-6 sm:py-14">
+      <main id="map" className="mx-auto max-w-6xl scroll-mt-20 px-2 py-10 sm:px-6 sm:py-14">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.3fr_1fr]">
-          <div className="flex flex-col gap-6">
-            <div className="rounded-2xl border border-border bg-gradient-to-b from-card to-secondary/40 p-4 shadow-sm sm:p-6">
-              <KuwaitMap selectedId={selectedId} onSelect={setSelectedId} isExplored={isExplored} />
-            </div>
+          {/* Map — first on all sizes */}
+          <div className="rounded-2xl border border-border bg-linear-to-b from-card to-secondary/40 p-2 shadow-sm sm:p-6">
+            <KuwaitMap selectedId={selectedId} onSelect={setSelectedId} isExplored={isExplored} />
+          </div>
+
+          {/* GovernorateDetail — second on mobile, right column on lg */}
+          <div className="order-2 lg:order-0 lg:row-span-2 lg:sticky lg:top-24 lg:self-start">
+            <GovernorateDetail
+              governorate={selected}
+              explored={selected ? isExplored(selected.id) : false}
+              onMarkExplored={markExplored}
+            />
+          </div>
+
+          {/* ProgressStats — last on mobile, below map on lg */}
+          <div className="order-3 lg:order-0">
             <ProgressStats
               earnedPoints={earnedPoints}
               exploredCount={explored.length}
@@ -70,19 +82,19 @@ export function HomePage() {
               }}
             />
           </div>
-
-          <div className="lg:sticky lg:top-24 lg:self-start">
-            <GovernorateDetail
-              governorate={selected}
-              explored={selected ? isExplored(selected.id) : false}
-              onMarkExplored={markExplored}
-            />
-          </div>
         </div>
       </main>
 
-      <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
-        {t.brand} · {t.brandSub}
+      <footer className="border-t border-border py-8 text-center text-xs text-muted-foreground">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4">
+          <p className="font-medium text-foreground">
+            {t.brand} · {t.brandSub}
+          </p>
+
+          <p className="text-muted-foreground">
+            © 2026 جميع الحقوق محفوظة — منصة تعلم اللهجة الكويتية
+          </p>
+        </div>
       </footer>
     </div>
   );

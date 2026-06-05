@@ -68,9 +68,11 @@ export function WordCard({ word, trending }: Props) {
               </span>
             )}
           </div>
-          <p className="mt-0.5 font-mono text-sm text-muted-foreground" dir="ltr">
-            /{word.pronunciation}/
-          </p>
+          {word.pronunciation && (
+            <p className="mt-0.5 font-mono text-sm text-muted-foreground" dir="ltr">
+              /{word.pronunciation}/
+            </p>
+          )}
         </div>
         <Button
           variant="outline"

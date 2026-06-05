@@ -1,33 +1,33 @@
 export type Bilingual = {
-  ar: string
-  en: string
-}
+  ar: string;
+  en: string;
+};
 
 export type Landmark = {
-  id: string
-  name: Bilingual
-  category: Bilingual
-  description: Bilingual
-}
+  id: string;
+  name: Bilingual;
+  category: Bilingual;
+  description: Bilingual;
+};
 
 export type Governorate = {
-  id: string
-  name: Bilingual
-  tagline: Bilingual
-  description: Bilingual
+  id: string;
+  name: Bilingual;
+  tagline: Bilingual;
+  description: Bilingual;
   /** stylized SVG polygon points within a 600x600 viewBox */
-  shape: string
+  shape: string;
   /** approximate label anchor inside the shape */
-  label: { x: number; y: number }
-  color: string
-  colorActive: string
-  areaKm2: number
-  population: string
-  points: number
-  landmarks: Landmark[]
-  facts: Bilingual[]
-  notableAreas: Bilingual[]
-}
+  label: { x: number; y: number };
+  color: string;
+  colorActive: string;
+  areaKm2: number;
+  population: string;
+  points: number;
+  landmarks: Landmark[];
+  facts: Bilingual[];
+  notableAreas: Bilingual[];
+};
 
 export const GOVERNORATES: Governorate[] = [
   {
@@ -121,7 +121,7 @@ export const GOVERNORATES: Governorate[] = [
     ],
     notableAreas: [
       { ar: "الجهراء القديمة", en: "Old Jahra" },
-      { ar: "الصليبية", en: "Sulaibiya" },
+      // { ar: "الصليبية", en: "Sulaibiya" },
       { ar: "الصبية", en: "Sabiya" },
       { ar: "كبد", en: "Kabd" },
       { ar: "النعيم", en: "Al Naeem" },
@@ -566,6 +566,6 @@ export const GOVERNORATES: Governorate[] = [
       { ar: "الفنطاس", en: "Fintas" },
     ],
   },
-]
+];
 
-export const TOTAL_POINTS = GOVERNORATES.reduce((sum, g) => sum + g.points, 0)
+export const TOTAL_POINTS = GOVERNORATES.reduce((sum, g) => sum + g.points, 0);
