@@ -9,6 +9,11 @@ import {
 } from "react";
 import { GOVERNORATES } from "@/lib/kuwait-data";
 
+const API_BASE =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? import.meta.env.VITE_API_LOCALHOST
+    : import.meta.env.VITE_API_URL;
+
 /* ═══════════════════════════════════════════════════════════════
    ➀ TYPE DEFINITIONS
    ═══════════════════════════════════════════════════════════════ */
@@ -388,7 +393,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     const isLoggedIn = Boolean(localStorage.getItem("userInfo"));
 
     if (isLoggedIn) {
-      fetch("http://localhost:4001/api/users/profile", { credentials: "include" })
+      fetch("${API_BASE}/api/users/profile", { credentials: "include" })
         .then((r) => {
           if (!r.ok) throw new Error("unauthenticated");
           return r.json();
@@ -507,7 +512,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
       // Sync to backend when logged in
       if (examId && localStorage.getItem("userInfo")) {
-        fetch("http://localhost:4001/api/users/quiz-result", {
+        fetch("${API_BASE}/api/users/quiz-result", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -617,7 +622,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     if (!localStorage.getItem("userInfo")) return;
 
     const timer = setTimeout(() => {
-      fetch("http://localhost:4001/api/users/progress", {
+      fetch("${API_BASE}/api/users/progress", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

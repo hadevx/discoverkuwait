@@ -11,7 +11,10 @@ import { ProfilePage } from "@/src/pages/profile/profile-page";
 import { MaintenancePage } from "@/src/pages/maintenance/maintenance-page";
 import { SiteBanner } from "@/components/site-banner";
 
-const API_BASE = "http://localhost:4001";
+const API_BASE =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? import.meta.env.VITE_API_LOCALHOST
+    : import.meta.env.VITE_API_URL;
 
 export function App() {
   const [siteStatus, setSiteStatus] = useState<"active" | "maintenance" | null>(null);

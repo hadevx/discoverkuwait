@@ -1,4 +1,9 @@
 import { useState, useEffect } from "react";
+
+const API_BASE =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? import.meta.env.VITE_API_LOCALHOST
+    : import.meta.env.VITE_API_URL;
 import {
   Footprints,
   Map as MapIcon,
@@ -68,7 +73,7 @@ export function ProfilePage() {
   const [savingAvatar, setSavingAvatar] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:4001/api/quiz")
+    fetch(`${API_BASE}/api/quiz`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((data: any[]) => { if (Array.isArray(data)) setAllExams(data) })
       .catch(() => {})

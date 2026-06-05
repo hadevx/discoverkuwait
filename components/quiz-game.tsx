@@ -10,7 +10,10 @@ import { useLanguage } from "@/lib/language-context"
 import { useProgress, POINTS } from "@/lib/progress-context"
 import { getQuizQuestions, type QuizQuestion } from "@/lib/quiz-data"
 
-const API_BASE = "http://localhost:4001"
+const API_BASE =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? import.meta.env.VITE_API_LOCALHOST
+    : import.meta.env.VITE_API_URL
 
 type Phase = "lobby" | "intro" | "playing" | "done"
 

@@ -4,7 +4,10 @@ import { GOVERNORATES } from "@/lib/kuwait-data";
 /* ── Constants ── */
 
 const STORAGE_KEY = "dk-progress-v1";
-const API_BASE = "http://localhost:4001";
+const API_BASE =
+  import.meta.env.VITE_ENVIRONMENT === "development"
+    ? import.meta.env.VITE_API_LOCALHOST
+    : import.meta.env.VITE_API_URL;
 
 export const POINTS = {
   perCorrectAnswer: 10,
