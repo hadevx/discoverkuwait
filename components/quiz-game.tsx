@@ -200,6 +200,7 @@ export function QuizGame() {
                   completed={hasCompletedQuiz(exam._id)}
                   grade={getQuizScore(exam._id)}
                   lang={lang}
+                  difficulty={exam.difficulty}
                   onPlay={() => pickExam(exam)}
                 />
               )
@@ -385,6 +386,12 @@ export function QuizGame() {
 }
 
 /* ── Exam card in the lobby ── */
+const DIFFICULTY_LABEL: Record<string, { ar: string; en: string; cls: string }> = {
+  easy:   { ar: "سهل",   en: "Easy",   cls: "bg-emerald-100 text-emerald-700" },
+  medium: { ar: "متوسط", en: "Medium", cls: "bg-amber-100 text-amber-700"     },
+  hard:   { ar: "صعب",   en: "Hard",   cls: "bg-rose-100 text-rose-700"       },
+}
+
 function ExamCard({
   title,
   questionCount,
@@ -392,6 +399,7 @@ function ExamCard({
   completed,
   grade,
   lang,
+  difficulty,
   onPlay,
 }: {
   title: string
@@ -400,6 +408,7 @@ function ExamCard({
   completed: boolean
   grade?: { score: number; total: number } | null
   lang: string
+  difficulty?: string
   onPlay: () => void
 }) {
   const Icon = CATEGORY_ICONS[categories[0] ?? "history"] ?? Brain
@@ -434,6 +443,11 @@ function ExamCard({
               </span>
             )
           })}
+          {difficulty && DIFFICULTY_LABEL[difficulty] && (
+            <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-bold", DIFFICULTY_LABEL[difficulty].cls)}>
+              {lang === "ar" ? DIFFICULTY_LABEL[difficulty].ar : DIFFICULTY_LABEL[difficulty].en}
+            </span>
+          )}
           {grade && pct !== null && (
             <span className={cn("text-xs font-extrabold tabular-nums", gradeColor)}>
               {grade.score}/{grade.total} · {pct}%

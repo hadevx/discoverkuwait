@@ -38,16 +38,27 @@ export function HomePage() {
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-6xl px-4 py-14 text-center sm:px-6 sm:py-20">
-          <span className="inline-block rounded-full border border-border bg-card px-4 py-1.5 text-xs font-semibold text-primary shadow-sm">
+          <span className="animate-float inline-block rounded-full border border-border bg-card px-4 py-1.5 text-xs font-semibold text-primary shadow-sm">
             {t.heroKicker}
           </span>
-          <h1 className="mx-auto mt-5 max-w-2xl text-balance text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl">
+          <h1
+            className="animate-fade-up-3d mx-auto mt-5 max-w-2xl text-balance text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl"
+            style={{ animationDelay: "80ms" }}
+          >
             {t.heroTitle}
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+          <p
+            className="animate-fade-up-3d mx-auto mt-4 max-w-xl text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base"
+            style={{ animationDelay: "190ms" }}
+          >
             {t.heroSubtitle}
           </p>
-          <Button onClick={scrollToMap} size="lg" className="mt-7 gap-2 rounded-full font-bold">
+          <Button
+            onClick={scrollToMap}
+            size="lg"
+            className="animate-fade-up-3d mt-7 gap-2 rounded-full font-bold"
+            style={{ animationDelay: "300ms" }}
+          >
             {t.heroCta}
             <ChevronDown className="size-4" aria-hidden="true" />
           </Button>
@@ -58,7 +69,7 @@ export function HomePage() {
       <main id="map" className="mx-auto max-w-6xl scroll-mt-20 px-2 py-10 sm:px-6 sm:py-14">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.3fr_1fr]">
           {/* Map — first on all sizes */}
-          <div className="rounded-2xl border border-border bg-linear-to-b from-card to-secondary/40 p-2 shadow-sm sm:p-6">
+          <div className="hover-lift-3d rounded-2xl border border-border bg-linear-to-b from-card to-secondary/40 p-2 shadow-sm sm:p-6">
             <KuwaitMap selectedId={selectedId} onSelect={setSelectedId} isExplored={isExplored} />
           </div>
 

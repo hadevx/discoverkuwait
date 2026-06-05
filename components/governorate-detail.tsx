@@ -31,7 +31,7 @@ export function GovernorateDetail({ governorate, explored, onMarkExplored }: Pro
   return (
     <article
       key={g.id}
-      className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
+      className="animate-card-enter-3d flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
     >
       {/* header band colored by the region */}
       <div
@@ -88,7 +88,7 @@ export function GovernorateDetail({ governorate, explored, onMarkExplored }: Pro
             {g.landmarks.map((l) => (
               <li
                 key={l.id}
-                className="rounded-xl border border-border bg-background/60 p-3"
+                className="hover-3d rounded-xl border border-border bg-background/60 p-3"
               >
                 <div className="flex items-center justify-between gap-2">
                   <p className="text-sm font-bold text-foreground">{tr(l.name)}</p>
@@ -109,7 +109,7 @@ export function GovernorateDetail({ governorate, explored, onMarkExplored }: Pro
           {g.facts.map((f, i) => (
             <div
               key={i}
-              className="flex items-start gap-2.5 rounded-xl bg-accent/20 p-3"
+              className="hover-3d flex items-start gap-2.5 rounded-xl bg-accent/20 p-3"
             >
               <Lightbulb className="mt-0.5 size-4 shrink-0 text-accent-foreground" aria-hidden="true" />
               <div>
@@ -175,7 +175,7 @@ function MiniStat({
   value: string
 }) {
   return (
-    <div className="rounded-xl border border-border bg-background/60 p-2.5 text-center">
+    <div className="hover-3d rounded-xl border border-border bg-background/60 p-2.5 text-center">
       <div className="mx-auto mb-1 flex size-6 items-center justify-center rounded-md bg-secondary text-primary">
         {icon}
       </div>

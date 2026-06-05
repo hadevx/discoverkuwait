@@ -142,4 +142,90 @@
         transparent 12px
       );
   }
+
+  /* ── 3-D animation utilities ── */
+
+  .animate-fade-up-3d {
+    animation: fade-up-3d 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .animate-card-enter-3d {
+    animation: card-enter-3d 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .animate-float {
+    animation: float 3.8s ease-in-out infinite;
+  }
+
+  /* Small cards — 3-D tilt on hover */
+  .hover-3d {
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    will-change: transform;
+  }
+  .hover-3d:hover {
+    transform: perspective(700px) rotateX(-4deg) rotateY(3deg) translateZ(6px);
+    box-shadow: 0 14px 28px -8px color-mix(in oklch, var(--foreground) 14%, transparent);
+  }
+
+  /* Wide containers — 3-D lift (no tilt) */
+  .hover-lift-3d {
+    transition: transform 0.32s ease, box-shadow 0.32s ease;
+    will-change: transform;
+  }
+  .hover-lift-3d:hover {
+    transform: perspective(1200px) translateZ(10px) translateY(-3px);
+    box-shadow: 0 22px 44px -14px color-mix(in oklch, var(--foreground) 16%, transparent);
+  }
+
+  /* Progress bar shimmer */
+  .progress-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in oklch, white 35%, transparent) 50%,
+      transparent 100%
+    );
+    animation: shimmer-sweep 2s ease-in-out infinite;
+  }
+}
+
+/* ── Keyframes ── */
+
+@keyframes fade-up-3d {
+  from {
+    opacity: 0;
+    transform: translateY(30px) translateZ(-28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(0) scale(1);
+  }
+}
+
+@keyframes card-enter-3d {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateX(12deg) translateY(22px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0deg) translateY(0) scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes shimmer-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
 }

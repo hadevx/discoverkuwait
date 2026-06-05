@@ -318,7 +318,7 @@ function getUnlockedBadges(
  * Compute all derived values from the raw progress state
  * This includes: points breakdown, level info, level progress, and unlocked badges
  */
-function computeDerived(state: ProgressState): Derived {
+export function computeDerived(state: ProgressState): Derived {
   // Calculate individual point categories
   const explorePoints = calculateExplorePoints(state.exploredAreas);
   const quizPoints = calculateQuizPoints(state.quizTotalCorrect);

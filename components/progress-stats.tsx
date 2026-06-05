@@ -55,7 +55,7 @@ export function ProgressStats({ earnedPoints, exploredCount, onReset }: Props) {
       <div className="mt-4">
         <div className="h-2.5 w-full overflow-hidden rounded-full bg-secondary">
           <div
-            className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
+            className="progress-shimmer h-full rounded-full bg-primary transition-all duration-500 ease-out"
             style={{ width: `${pct}%` }}
             role="progressbar"
             aria-valuenow={pct}
@@ -87,7 +87,7 @@ function Stat({
   tone: "accent" | "primary"
 }) {
   return (
-    <div className="rounded-xl border border-border bg-background/60 p-3">
+    <div className="hover-3d rounded-xl border border-border bg-background/60 p-3">
       <div
         className={`mb-1.5 flex size-7 items-center justify-center rounded-lg ${
           tone === "accent"
