@@ -393,7 +393,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     const isLoggedIn = Boolean(localStorage.getItem("userInfo"));
 
     if (isLoggedIn) {
-      fetch("${API_BASE}/api/users/profile", { credentials: "include" })
+      fetch(`${API_BASE}/api/users/profile`, { credentials: "include" })
         .then((r) => {
           if (!r.ok) throw new Error("unauthenticated");
           return r.json();
@@ -512,7 +512,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
       // Sync to backend when logged in
       if (examId && localStorage.getItem("userInfo")) {
-        fetch("${API_BASE}/api/users/quiz-result", {
+        fetch(`${API_BASE}/api/users/quiz-result`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -622,7 +622,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     if (!localStorage.getItem("userInfo")) return;
 
     const timer = setTimeout(() => {
-      fetch("${API_BASE}/api/users/progress", {
+      fetch(`${API_BASE}/api/users/progress`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
