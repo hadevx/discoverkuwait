@@ -9,6 +9,7 @@ import { QuizPage } from "@/src/pages/quiz/quiz-page";
 import { DictionaryPage } from "@/src/pages/dictionary/dictionary-page";
 import { ProfilePage } from "@/src/pages/profile/profile-page";
 import { ForumPage } from "@/src/pages/forum/forum-page";
+import { UsersPage } from "@/src/pages/users/UsersPage";
 import { MaintenancePage } from "@/src/pages/maintenance/maintenance-page";
 import { SiteBanner } from "@/components/site-banner";
 
@@ -58,6 +59,7 @@ export function App() {
                 <Route path="/dictionary" element={<DictionaryPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/forum" element={<ForumPage />} />
+                <Route path="/users" element={<UsersPage />} />
               </Routes>
             </>
           )}

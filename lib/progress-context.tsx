@@ -77,6 +77,7 @@ type ProgressContextValue = {
   isExplored: (id: string) => boolean;
   markExplored: (id: string) => void;
   recordQuiz: (correct: number, total: number, examId?: string) => void;
+  recordActivity: () => void;
   hasVoted: (wordId: string) => boolean;
   toggleVote: (wordId: string) => void;
   reconcileApiVotes: (votes: Array<{ wordId: string; voted: boolean }>) => void;
@@ -523,6 +524,21 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     [update],
   );
 
+  // ───── Action: Record non-quiz activity (forum post, etc.) for streak ─────
+  const recordActivity = useCallback(() => {
+    update((prev) => {
+      const today = getTodayKey();
+      if (prev.lastQuizDate === today) return prev;
+      const newStreak = calculateNewStreak(prev.streak, prev.lastQuizDate, today);
+      return {
+        ...prev,
+        streak: newStreak,
+        bestStreak: Math.max(prev.bestStreak, newStreak),
+        lastQuizDate: today,
+      };
+    });
+  }, [update]);
+
   // ───── Action: Toggle vote on a word ─────
   const toggleVote = useCallback(
     (wordId: string) => {
@@ -663,6 +679,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     isExplored: (id) => state.exploredAreas.includes(id),
     markExplored,
     recordQuiz,
+    recordActivity,
     hasVoted: (id) => state.votedWords.includes(id),
     toggleVote,
     reconcileApiVotes,

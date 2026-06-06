@@ -41,9 +41,10 @@ import { logout, setUserInfo } from "@/src/redux/slices/authSlice";
 import { useLogoutApiMutation, useUpdateUserMutation } from "@/src/redux/queries/userApi";
 
 // All selectable avatars from /public/avatar/
-const AVATARS = [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map(
-  (n) => `${n}.webp`,
-);
+const AVATARS = [
+  1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+  28, 30,
+].map((n) => `${n}.webp`);
 
 const BADGE_ICONS: Record<string, LucideIcon> = {
   Footprints,
@@ -293,8 +294,68 @@ export function ProfilePage() {
             </div>
           )}
 
+          {/* Streak card */}
+          {(() => {
+            const today = new Date().toISOString().slice(0, 10);
+            const activeToday = state.lastQuizDate === today;
+            const hasStreak = state.streak > 0;
+            return (
+              <div
+                className={`mt-5 rounded-2xl border p-4 sm:p-5 flex items-center justify-between gap-4 flex-wrap ${
+                  activeToday
+                    ? "border-orange-400/40 bg-orange-400/8 dark:bg-orange-400/5"
+                    : "border-border bg-card"
+                }`}>
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`flex size-14 items-center justify-center rounded-2xl shadow-sm text-3xl select-none ${
+                      activeToday
+                        ? "bg-orange-500 shadow-orange-500/30"
+                        : hasStreak
+                          ? "bg-secondary"
+                          : "bg-secondary"
+                    }`}>
+                    {activeToday ? "🔥" : hasStreak ? "🔥" : "💤"}
+                  </div>
+                  <div>
+                    <div className="flex items-baseline gap-2">
+                      <span
+                        className={`text-3xl font-extrabold ${activeToday ? "text-orange-500 dark:text-orange-400" : "text-foreground"}`}>
+                        {state.streak}
+                      </span>
+                      <span className="text-sm font-semibold text-muted-foreground">
+                        {lang === "ar" ? "يوم متواصل" : "day streak"}
+                      </span>
+                    </div>
+                    <p
+                      className={`text-xs font-medium mt-0.5 ${activeToday ? "text-orange-600 dark:text-orange-400" : "text-muted-foreground"}`}>
+                      {activeToday
+                        ? lang === "ar"
+                          ? "✓ نشط اليوم — استمر!"
+                          : "✓ Active today — keep it up!"
+                        : hasStreak
+                          ? lang === "ar"
+                            ? "⚠ أكمل نشاطاً اليوم للحفاظ على سلسلتك"
+                            : "⚠ Complete an activity today to keep your streak"
+                          : lang === "ar"
+                            ? "أكمل اختباراً أو انشر صورة لتبدأ"
+                            : "Complete a quiz or post a photo to start"}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 rounded-full border border-border bg-secondary/60 px-4 py-2">
+                  <Flame className="size-4 text-orange-400" aria-hidden="true" />
+                  <span className="text-sm font-extrabold text-foreground">{state.bestStreak}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {lang === "ar" ? "أفضل" : "best"}
+                  </span>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* Level card */}
-          <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
+          <div className="mt-4 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <div className="flex size-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">

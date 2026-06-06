@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Languages, MapPin, Brain, BookOpen, User, Moon, Sun, Gem, Menu, Images } from "lucide-react";
+import { Languages, MapPin, Brain, BookOpen, User, Moon, Sun, Gem, Menu, Images, Flame } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import { useProgress } from "@/lib/progress-context";
 
 export function SiteHeader() {
   const { t, dir, toggleLang } = useLanguage();
-  const { derived, ready } = useProgress();
+  const { state, derived, ready } = useProgress();
   const pathname = useLocation().pathname;
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -92,6 +92,14 @@ export function SiteHeader() {
 
         {/* Desktop right controls */}
         <div className="hidden md:flex shrink-0 items-center gap-2">
+          {ready && state.streak > 0 && (
+            <div
+              className="flex items-center gap-1.5 rounded-full border border-orange-400/40 bg-orange-400/10 px-3 py-1.5 text-sm font-bold text-orange-500 dark:text-orange-400"
+              title="Day streak">
+              <Flame className="size-4" aria-hidden="true" />
+              {state.streak}
+            </div>
+          )}
           <div
             className="flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1.5 text-sm font-bold text-amber-600 dark:text-amber-400"
             title={t.totalPoints}>
@@ -104,6 +112,14 @@ export function SiteHeader() {
 
         {/* Mobile right controls */}
         <div className="flex md:hidden items-center gap-1.5">
+          {ready && state.streak > 0 && (
+            <div
+              className="flex items-center gap-1 rounded-full border border-orange-400/40 bg-orange-400/10 px-2.5 py-1.5 text-xs font-bold text-orange-500 dark:text-orange-400"
+              title="Day streak">
+              <Flame className="size-3.5" aria-hidden="true" />
+              {state.streak}
+            </div>
+          )}
           <div
             className="flex items-center gap-1 rounded-full border border-amber-400/40 bg-amber-400/10 px-2.5 py-1.5 text-xs font-bold text-amber-600 dark:text-amber-400"
             title={t.totalPoints}>

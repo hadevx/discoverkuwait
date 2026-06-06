@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { SiteHeader } from "@/components/site-header";
 import { useLanguage } from "@/lib/language-context";
+import { useProgress } from "@/lib/progress-context";
 import { cn } from "@/lib/utils";
 import { LoginModal } from "@/src/pages/auth/Login";
 import { RegisterModal } from "@/src/pages/auth/RegisterModal";
@@ -441,6 +442,7 @@ function UploadModal({ onClose, onSuccess, lang, t }: UploadModalProps) {
 // ─── Forum Page ───────────────────────────────────────────────────────────────
 export function ForumPage() {
   const { t, lang, dir } = useLanguage();
+  const { recordActivity } = useProgress();
   const userInfo = useSelector((state: any) => state.auth?.userInfo);
 
   const [posts, setPosts] = useState<Post[]>([]);
@@ -525,6 +527,7 @@ export function ForumPage() {
 
   const handleUploadSuccess = (post: Post) => {
     setPendingPosts((prev) => [post, ...prev]);
+    recordActivity();
   };
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Trophy,
   Gem,
@@ -56,7 +57,7 @@ type Entry = {
   isMe: boolean;
 };
 
-function Avatar({
+export function Avatar({
   name,
   avatar,
   size = "sm",
@@ -91,7 +92,7 @@ function Avatar({
 
 /* ── Trophy Modal ── */
 
-function UserTrophyModal({
+export function UserTrophyModal({
   entry,
   rank,
   onClose,
@@ -242,9 +243,10 @@ function UserTrophyModal({
 /* ── Leaderboard ── */
 
 export function Leaderboard() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { derived } = useProgress();
   const userInfo = useSelector((state: any) => state.auth.userInfo);
+  const navigate = useNavigate();
 
   const [selected, setSelected] = useState<{ entry: Entry; rank: number } | null>(null);
 
@@ -391,6 +393,14 @@ export function Leaderboard() {
           </ol>
         )}
       </section>
+
+      {/* Show All Users button */}
+      <button
+        onClick={() => navigate("/users")}
+        className="mt-4 w-full flex items-center justify-center gap-2 rounded-xl border border-border bg-secondary/50 py-2.5 text-sm font-semibold text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors">
+        <Trophy className="size-4" aria-hidden="true" />
+        {lang === "ar" ? "عرض جميع المستخدمين" : "Show All Users"}
+      </button>
 
       {/* Trophy modal */}
       {selected && (
