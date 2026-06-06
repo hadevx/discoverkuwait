@@ -119,6 +119,16 @@ type UIStrings = {
   logoutBtn: string
   guestPromptTitle: string
   guestPromptDesc: string
+  loginTitle: string
+  registerTitle: string
+  emailPlaceholder: string
+  passwordPlaceholder: string
+  namePlaceholder: string
+  confirmPasswordPlaceholder: string
+  loggingIn: string
+  creatingAccount: string
+  noAccount: string
+  alreadyHaveAccount: string
   // toasts
   toastAllFieldsRequired: string
   toastPasswordsMismatch: string
@@ -127,6 +137,16 @@ type UIStrings = {
   toastFailedSubmitWord: string
   toastFailedUpdateName: string
   toastErrorOccurred: string
+  // forum
+  navForum: string
+  forumTitle: string
+  forumSubtitle: string
+  sharePhoto: string
+  captionPlaceholder: string
+  posting: string
+  noForumPosts: string
+  loginToVote: string
+  loginToPost: string
   // categories
   catFood: string
   catDailyLife: string
@@ -150,6 +170,7 @@ const STRINGS: Record<Lang, UIStrings> = {
     navQuiz: "التحدي",
     navDictionary: "القاموس",
     navProfile: "ملفي",
+    navForum: "المنتدى",
     langToggle: "English",
     themeToggle: "تبديل المظهر",
     heroKicker: "استكشف · تعلّم · اجمع النقاط",
@@ -252,6 +273,16 @@ const STRINGS: Record<Lang, UIStrings> = {
     logoutBtn: "تسجيل الخروج",
     guestPromptTitle: "احفظ تقدّمك",
     guestPromptDesc: "سجّل دخولك أو أنشئ حساباً لحفظ نقاطك ومزامنة تقدّمك عبر أجهزتك.",
+    loginTitle: "أهلاً بعودتك",
+    registerTitle: "إنشاء حساب جديد",
+    emailPlaceholder: "البريد الإلكتروني",
+    passwordPlaceholder: "كلمة المرور",
+    namePlaceholder: "الاسم الكامل",
+    confirmPasswordPlaceholder: "تأكيد كلمة المرور",
+    loggingIn: "جاري تسجيل الدخول...",
+    creatingAccount: "جاري إنشاء الحساب...",
+    noAccount: "ليس لديك حساب؟",
+    alreadyHaveAccount: "لديك حساب بالفعل؟",
     toastAllFieldsRequired: "جميع الحقول مطلوبة",
     toastPasswordsMismatch: "كلمتا المرور غير متطابقتين",
     toastAccountCreated: "تم إنشاء الحساب! أهلاً بك.",
@@ -259,6 +290,14 @@ const STRINGS: Record<Lang, UIStrings> = {
     toastFailedSubmitWord: "فشل إرسال الكلمة",
     toastFailedUpdateName: "فشل تحديث الاسم",
     toastErrorOccurred: "حدث خطأ",
+    forumTitle: "منتدى الصور",
+    forumSubtitle: "شارك صورك واستمتع بأجمل لحظات الكويت مع المجتمع",
+    sharePhoto: "مشاركة صورة",
+    captionPlaceholder: "أضف وصفاً للصورة... (اختياري)",
+    posting: "جاري النشر...",
+    noForumPosts: "لا توجد صور بعد. كن أول من يشارك!",
+    loginToVote: "سجّل دخولك للتصويت",
+    loginToPost: "سجّل دخولك لمشاركة صورة",
     catFood: "طعام",
     catDailyLife: "حياة يومية",
     catTraditions: "عادات",
@@ -279,6 +318,7 @@ const STRINGS: Record<Lang, UIStrings> = {
     navQuiz: "Quiz",
     navDictionary: "Dictionary",
     navProfile: "Profile",
+    navForum: "Forum",
     langToggle: "العربية",
     themeToggle: "Toggle theme",
     heroKicker: "Explore · Learn · Earn points",
@@ -381,6 +421,16 @@ const STRINGS: Record<Lang, UIStrings> = {
     logoutBtn: "Log out",
     guestPromptTitle: "Save your progress",
     guestPromptDesc: "Log in or create an account to save your points and sync your progress across devices.",
+    loginTitle: "Welcome back",
+    registerTitle: "Create an account",
+    emailPlaceholder: "Email",
+    passwordPlaceholder: "Password",
+    namePlaceholder: "Full name",
+    confirmPasswordPlaceholder: "Confirm password",
+    loggingIn: "Logging in...",
+    creatingAccount: "Creating account...",
+    noAccount: "Don't have an account?",
+    alreadyHaveAccount: "Already have an account?",
     toastAllFieldsRequired: "All fields are required",
     toastPasswordsMismatch: "Passwords do not match",
     toastAccountCreated: "Account created! Welcome aboard.",
@@ -388,6 +438,14 @@ const STRINGS: Record<Lang, UIStrings> = {
     toastFailedSubmitWord: "Failed to submit word",
     toastFailedUpdateName: "Failed to update name",
     toastErrorOccurred: "An error occurred",
+    forumTitle: "Photo Forum",
+    forumSubtitle: "Share your photos and enjoy beautiful Kuwait moments with the community",
+    sharePhoto: "Share a Photo",
+    captionPlaceholder: "Add a caption... (optional)",
+    posting: "Posting...",
+    noForumPosts: "No photos yet. Be the first to share!",
+    loginToVote: "Log in to vote",
+    loginToPost: "Log in to share a photo",
     catFood: "Food",
     catDailyLife: "Daily life",
     catTraditions: "Traditions",

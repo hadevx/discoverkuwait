@@ -22,7 +22,7 @@ export function LoginModal({ open, onOpenChange, onSwitchToRegister }: LoginModa
 
   const dispatch = useDispatch();
   const { syncFromUser } = useProgress();
-  const { t } = useLanguage();
+  const { t, lang, dir } = useLanguage();
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
 
@@ -58,18 +58,19 @@ export function LoginModal({ open, onOpenChange, onSwitchToRegister }: LoginModa
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-sm">
+      <DialogContent className="sm:max-w-sm" dir={dir}>
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">Welcome back</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">{t.loginTitle}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleLogin} className="flex flex-col gap-3 mt-2">
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder={t.emailPlaceholder}
             value={email}
             onChange={handleChange}
+            dir="ltr"
             className="w-full h-10 rounded-md border border-border bg-background px-4 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
           />
 
@@ -77,9 +78,10 @@ export function LoginModal({ open, onOpenChange, onSwitchToRegister }: LoginModa
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Password"
+              placeholder={t.passwordPlaceholder}
               value={password}
               onChange={handleChange}
+              dir="ltr"
               className="w-full h-10 rounded-md border border-border bg-background px-4 pr-10 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             />
             <button
@@ -98,25 +100,25 @@ export function LoginModal({ open, onOpenChange, onSwitchToRegister }: LoginModa
             disabled={isLoading}
             type="submit"
             className="w-full mt-1 h-10 rounded-lg font-semibold text-sm bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors">
-            {isLoading ? "Logging in..." : "Log in"}
+            {isLoading ? t.loggingIn : t.loginBtn}
           </button>
         </form>
 
         <p className="text-center text-sm text-muted-foreground mt-2">
-          Don't have an account?{" "}
+          {t.noAccount}{" "}
           {onSwitchToRegister ? (
             <button
               type="button"
               className="font-semibold text-foreground underline underline-offset-4"
               onClick={() => { onOpenChange(false); onSwitchToRegister(); }}>
-              Register
+              {t.registerBtn}
             </button>
           ) : (
             <Link
               to="/register"
               className="font-semibold text-foreground underline underline-offset-4"
               onClick={() => onOpenChange(false)}>
-              Register
+              {t.registerBtn}
             </Link>
           )}
         </p>

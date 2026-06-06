@@ -307,7 +307,7 @@ export function ProfilePage() {
                   <p className="text-xl font-extrabold text-foreground">{levelName}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 rounded-full border border-border bg-accent/20 px-4 py-2 text-lg font-extrabold text-accent-foreground">
+              <div className="flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/10 px-4 py-2 text-lg font-extrabold text-amber-600 dark:text-amber-400">
                 <Gem className="size-5" aria-hidden="true" />
                 {derived.totalPoints}
                 <span className="text-xs font-medium text-muted-foreground">{t.totalPoints}</span>

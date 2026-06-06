@@ -21,7 +21,7 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
 
   const dispatch = useDispatch();
   const { state, syncFromUser } = useProgress();
-  const { t } = useLanguage();
+  const { t, dir } = useLanguage();
   const [registerUser, { isLoading }] = useRegisterUserMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,35 +53,38 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-sm">
+      <DialogContent className="sm:max-w-sm" dir={dir}>
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">Create account</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">{t.registerTitle}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleRegister} className="flex flex-col gap-3 mt-2">
           <input
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder={t.namePlaceholder}
             value={name}
             onChange={handleChange}
+            dir="auto"
             className="w-full h-10 rounded-md border border-border bg-background px-4 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
           />
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder={t.emailPlaceholder}
             value={email}
             onChange={handleChange}
+            dir="ltr"
             className="w-full h-10 rounded-md border border-border bg-background px-4 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
           />
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              placeholder="Password"
+              placeholder={t.passwordPlaceholder}
               value={password}
               onChange={handleChange}
+              dir="ltr"
               className="w-full h-10 rounded-md border border-border bg-background px-4 pr-10 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
             />
             <button
@@ -94,9 +97,10 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
           <input
             type={showPassword ? "text" : "password"}
             name="confirmPassword"
-            placeholder="Confirm password"
+            placeholder={t.confirmPasswordPlaceholder}
             value={confirmPassword}
             onChange={handleChange}
+            dir="ltr"
             className="w-full h-10 rounded-md border border-border bg-background px-4 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
           />
 
@@ -104,17 +108,17 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
             disabled={isLoading}
             type="submit"
             className="w-full mt-1 h-10 rounded-lg font-semibold text-sm bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors">
-            {isLoading ? "Creating account..." : "Create account"}
+            {isLoading ? t.creatingAccount : t.registerBtn}
           </button>
         </form>
 
         <p className="text-center text-sm text-muted-foreground mt-2">
-          Already have an account?{" "}
+          {t.alreadyHaveAccount}{" "}
           <button
             type="button"
             className="font-semibold text-foreground underline underline-offset-4"
             onClick={() => { onOpenChange(false); onSwitchToLogin?.(); }}>
-            Log in
+            {t.loginBtn}
           </button>
         </p>
       </DialogContent>
