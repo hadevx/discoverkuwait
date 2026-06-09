@@ -1,17 +1,19 @@
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { LanguageProvider } from "@/lib/language-context";
 import { ProgressProvider } from "@/lib/progress-context";
-import { HomePage } from "@/src/pages/home/home-page";
-import { QuizPage } from "@/src/pages/quiz/quiz-page";
-import { DictionaryPage } from "@/src/pages/dictionary/dictionary-page";
-import { ProfilePage } from "@/src/pages/profile/profile-page";
-import { ForumPage } from "@/src/pages/forum/forum-page";
-import { UsersPage } from "@/src/pages/users/UsersPage";
-import { MaintenancePage } from "@/src/pages/maintenance/maintenance-page";
 import { SiteBanner } from "@/components/site-banner";
+
+const HomePage        = lazy(() => import("@/src/pages/home/home-page").then((m) => ({ default: m.HomePage })));
+const QuizPage        = lazy(() => import("@/src/pages/quiz/quiz-page").then((m) => ({ default: m.QuizPage })));
+const DictionaryPage  = lazy(() => import("@/src/pages/forum/dictionary/dictionary-page").then((m) => ({ default: m.DictionaryPage })));
+const ProfilePage     = lazy(() => import("@/src/pages/profile/profile-page").then((m) => ({ default: m.ProfilePage })));
+const ForumPage       = lazy(() => import("@/src/pages/forum/forum-page").then((m) => ({ default: m.ForumPage })));
+const TopicDetailPage = lazy(() => import("@/src/pages/forum/topic-detail-page").then((m) => ({ default: m.TopicDetailPage })));
+const UsersPage       = lazy(() => import("@/src/pages/users/UsersPage").then((m) => ({ default: m.UsersPage })));
+const MaintenancePage = lazy(() => import("@/src/pages/maintenance/maintenance-page").then((m) => ({ default: m.MaintenancePage })));
 
 const API_BASE =
   import.meta.env.VITE_ENVIRONMENT === "development"
@@ -41,28 +43,32 @@ export function App() {
       .catch(() => setSiteStatus("active"));
   }, []);
 
-  // Still loading — render nothing (avoids flash of wrong page)
   if (siteStatus === null) return null;
 
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
       <LanguageProvider>
         <ProgressProvider>
-          {siteStatus === "maintenance" ? (
-            <MaintenancePage />
-          ) : (
-            <>
-              {banner && <SiteBanner message={banner} bgColor={bannerBg} textColor={bannerTextColor} />}
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/quiz" element={<QuizPage />} />
-                <Route path="/dictionary" element={<DictionaryPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/forum" element={<ForumPage />} />
-                <Route path="/users" element={<UsersPage />} />
-              </Routes>
-            </>
-          )}
+          <Suspense fallback={null}>
+            {siteStatus === "maintenance" ? (
+              <MaintenancePage />
+            ) : (
+              <>
+                {banner && (
+                  <SiteBanner message={banner} bgColor={bannerBg} textColor={bannerTextColor} />
+                )}
+                <Routes>
+                  <Route path="/"                  element={<HomePage />} />
+                  <Route path="/quiz"              element={<QuizPage />} />
+                  <Route path="/dictionary"        element={<DictionaryPage />} />
+                  <Route path="/profile"           element={<ProfilePage />} />
+                  <Route path="/forum"             element={<ForumPage />} />
+                  <Route path="/forum/topics/:id"  element={<TopicDetailPage />} />
+                  <Route path="/users"             element={<UsersPage />} />
+                </Routes>
+              </>
+            )}
+          </Suspense>
           <Toaster position="top-center" richColors />
         </ProgressProvider>
       </LanguageProvider>

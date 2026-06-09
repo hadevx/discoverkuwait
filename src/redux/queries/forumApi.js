@@ -1,5 +1,43 @@
 import { apiSlice } from "./apiSlice";
 
+// ── Forum post (image competition) endpoints ──────────────────────────────────
+export const postsApi = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getForumPosts: builder.query({
+      query: (page = 1) => ({ url: `/api/forum?page=${page}` }),
+      providesTags: ["Forum"],
+    }),
+    getMyPendingPosts: builder.query({
+      query: () => ({ url: "/api/forum/my-pending" }),
+      providesTags: ["ForumPending"],
+    }),
+    createForumPost: builder.mutation({
+      query: (formData) => ({ url: "/api/forum", method: "POST", body: formData }),
+      invalidatesTags: ["ForumPending"],
+    }),
+    voteForumPost: builder.mutation({
+      query: (id) => ({ url: `/api/forum/${id}/vote`, method: "PATCH" }),
+    }),
+    deleteForumPost: builder.mutation({
+      query: (id) => ({ url: `/api/forum/${id}`, method: "DELETE" }),
+    }),
+    getCompetitionStatus: builder.query({
+      query: () => ({ url: "/api/competition" }),
+      providesTags: ["Competition"],
+    }),
+  }),
+});
+
+export const {
+  useGetForumPostsQuery,
+  useGetMyPendingPostsQuery,
+  useCreateForumPostMutation,
+  useVoteForumPostMutation,
+  useDeleteForumPostMutation,
+  useGetCompetitionStatusQuery,
+} = postsApi;
+
+// ── Topics endpoints ───────────────────────────────────────────────────────────
 export const topicApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Get all topics with optional category and search

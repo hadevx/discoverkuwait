@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from "react"
 import { Search, TrendingUp, Clock } from "lucide-react"
 import { useSelector } from "react-redux"
 import { SiteHeader } from "@/components/site-header"
+import { SEO } from "@/src/components/seo"
 import { WordCard } from "@/components/word-card"
 import { SubmitWordDialog } from "@/components/submit-word-dialog"
 import { Input } from "@/components/ui/input"
@@ -28,9 +29,16 @@ function toDialectWord(w: any): DialectWord {
 }
 
 export function DictionaryPage() {
-  const { t, tr } = useLanguage()
+  const { t, tr, lang } = useLanguage()
   const { state, reconcileApiVotes } = useProgress()
   const userInfo = useSelector((state: any) => state.auth.userInfo)
+
+  const seoTitle = lang === "ar"
+    ? "قاموس اللهجة الكويتية | اكتشف الكويت"
+    : "Kuwaiti Dialect Dictionary | Discover Kuwait"
+  const seoDesc = lang === "ar"
+    ? "اكتشف مفردات اللهجة الكويتية بمعانيها العربية والإنجليزية مع أمثلة وطريقة النطق — وشارك بإضافة كلمات جديدة."
+    : "Browse Kuwaiti dialect words with Arabic and English meanings, examples, and pronunciation. Contribute new words to the community dictionary."
   const [query, setQuery] = useState("")
   const [category, setCategory] = useState<WordCategory | "all">("all")
 
@@ -87,6 +95,7 @@ export function DictionaryPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO title={seoTitle} description={seoDesc} canonical="https://discoverkuwait.org/dictionary" />
       <SiteHeader />
 
       <section className="relative overflow-hidden border-b border-border">

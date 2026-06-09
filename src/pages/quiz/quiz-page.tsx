@@ -3,14 +3,23 @@ import { SiteHeader } from "@/components/site-header"
 import { QuizGame } from "@/components/quiz-game"
 import { Leaderboard } from "@/components/leaderboard"
 import { useLanguage } from "@/lib/language-context"
+import { SEO } from "@/src/components/seo"
 import { useProgress } from "@/lib/progress-context"
 
 export function QuizPage() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { state } = useProgress()
+
+  const seoTitle = lang === "ar"
+    ? "تحدّي الكويت — اختبر معلوماتك | اكتشف الكويت"
+    : "Kuwait Quiz — Test Your Knowledge | Discover Kuwait"
+  const seoDesc = lang === "ar"
+    ? "اختبر معلوماتك عن الكويت يومياً — أسئلة في اللهجة والتاريخ والجغرافيا والتراث. اجمع النقاط وتسلّق قائمة المتصدّرين."
+    : "Daily Kuwait trivia quiz — dialect, history, geography, and culture. Earn points, build streaks, and climb the leaderboard."
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO title={seoTitle} description={seoDesc} canonical="https://discoverkuwait.org/quiz" />
       <SiteHeader />
 
       <section className="relative overflow-hidden border-b border-border">

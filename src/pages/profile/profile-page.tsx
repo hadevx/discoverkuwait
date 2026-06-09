@@ -39,6 +39,7 @@ import { LoginModal } from "@/src/pages/auth/Login";
 import { RegisterModal } from "@/src/pages/auth/RegisterModal";
 import { logout, setUserInfo } from "@/src/redux/slices/authSlice";
 import { useLogoutApiMutation, useUpdateUserMutation } from "@/src/redux/queries/userApi";
+import { SEO } from "@/src/components/seo";
 
 // All selectable avatars from /public/avatar/
 const AVATARS = [
@@ -152,6 +153,11 @@ export function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={lang === "ar" ? "ملفي الشخصي | اكتشف الكويت" : "My Profile | Discover Kuwait"}
+        description={lang === "ar" ? "تقدّمك، إنجازاتك، ونقاطك في رحلة اكتشاف الكويت." : "Your progress, achievements, and points in the Discover Kuwait journey."}
+        noindex
+      />
       <SiteHeader />
 
       <LoginModal

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Search, Gem, ArrowLeft, Users, Trophy } from "lucide-react";
 import { useSelector } from "react-redux";
 import { SiteHeader } from "@/components/site-header";
+import { SEO } from "@/src/components/seo";
 import { Avatar, UserTrophyModal } from "@/components/leaderboard";
 import { useLanguage } from "@/lib/language-context";
 import { LEVELS } from "@/lib/progress-context";
@@ -139,6 +140,11 @@ export function UsersPage() {
 
   return (
     <div className="min-h-screen bg-background" dir={dir}>
+      <SEO
+        title={lang === "ar" ? "لوحة المتصدّرين | اكتشف الكويت" : "Leaderboard | Discover Kuwait"}
+        description={lang === "ar" ? "تعرّف على أبرز المستكشفين ومحترفي تحديات الكويت." : "See the top explorers and Kuwait challenge champions."}
+        noindex
+      />
       <SiteHeader />
 
       {/* Modal */}

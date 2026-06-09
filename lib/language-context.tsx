@@ -147,6 +147,34 @@ type UIStrings = {
   noForumPosts: string
   loginToVote: string
   loginToPost: string
+  imagesTab: string
+  topicsTab: string
+  competitionOpen: string
+  competitionClosed: string
+  competitionEnds: string
+  competitionClosedMsg: string
+  competitionMyPending: string
+  pending: string
+  confirm: string
+  dragImageHere: string
+  photoReviewNotice: string
+  photoUploadSuccess: string
+  newTopic: string
+  topicPlaceholder: string
+  postTopic: string
+  topicCreated: string
+  closed: string
+  noComments: string
+  topicClosedMsg: string
+  loginToComment: string
+  commentPlaceholder: string
+  myPendingPhotos: string
+  loadMore: string
+  noTopics: string
+  startTopic: string
+  allCategories: string
+  postDeleted: string
+  backToForum: string
   // categories
   catFood: string
   catDailyLife: string
@@ -290,14 +318,42 @@ const STRINGS: Record<Lang, UIStrings> = {
     toastFailedSubmitWord: "فشل إرسال الكلمة",
     toastFailedUpdateName: "فشل تحديث الاسم",
     toastErrorOccurred: "حدث خطأ",
-    forumTitle: "منتدى الصور",
-    forumSubtitle: "شارك صورك واستمتع بأجمل لحظات الكويت مع المجتمع",
+    forumTitle: "المنتدى",
+    forumSubtitle: "شارك أفكارك وصورك مع المجتمع",
     sharePhoto: "مشاركة صورة",
     captionPlaceholder: "أضف وصفاً للصورة... (اختياري)",
     posting: "جاري النشر...",
-    noForumPosts: "لا توجد صور بعد. كن أول من يشارك!",
+    noForumPosts: "لا توجد منشورات بعد. كن أول من يشارك!",
     loginToVote: "سجّل دخولك للتصويت",
-    loginToPost: "سجّل دخولك لمشاركة صورة",
+    loginToPost: "سجّل دخولك للمشاركة",
+    imagesTab: "مسابقة أفضل صورة",
+    topicsTab: "المواضيع",
+    competitionOpen: "المسابقة مفتوحة",
+    competitionClosed: "المسابقة مغلقة",
+    competitionEnds: "تنتهي في",
+    competitionClosedMsg: "المسابقة مغلقة حالياً. تابعنا قريباً!",
+    competitionMyPending: "صوري قيد المراجعة",
+    pending: "قيد المراجعة",
+    confirm: "تأكيد",
+    dragImageHere: "اضغط أو اسحب صورة هنا",
+    photoReviewNotice: "ستخضع صورتك للمراجعة قبل نشرها للعموم.",
+    photoUploadSuccess: "تم رفع الصورة! ستظهر بعد موافقة المشرف.",
+    newTopic: "موضوع جديد",
+    topicPlaceholder: "ما الذي تريد مناقشته؟",
+    postTopic: "نشر الموضوع",
+    topicCreated: "تم إنشاء الموضوع!",
+    closed: "مغلق",
+    noComments: "لا تعليقات بعد.",
+    topicClosedMsg: "هذا الموضوع مغلق.",
+    loginToComment: "سجّل دخولك للتعليق",
+    commentPlaceholder: "اكتب تعليقاً...",
+    myPendingPhotos: "صوري قيد المراجعة",
+    loadMore: "تحميل المزيد",
+    noTopics: "لا توجد مواضيع بعد.",
+    startTopic: "ابدأ موضوعاً",
+    allCategories: "الكل",
+    postDeleted: "تم حذف المنشور",
+    backToForum: "العودة إلى المنتدى",
     catFood: "طعام",
     catDailyLife: "حياة يومية",
     catTraditions: "عادات",
@@ -438,14 +494,42 @@ const STRINGS: Record<Lang, UIStrings> = {
     toastFailedSubmitWord: "Failed to submit word",
     toastFailedUpdateName: "Failed to update name",
     toastErrorOccurred: "An error occurred",
-    forumTitle: "Photo Forum",
-    forumSubtitle: "Share your photos and enjoy beautiful Kuwait moments with the community",
+    forumTitle: "Forum",
+    forumSubtitle: "Share your thoughts and photos with the community",
     sharePhoto: "Share a Photo",
     captionPlaceholder: "Add a caption... (optional)",
     posting: "Posting...",
-    noForumPosts: "No photos yet. Be the first to share!",
+    noForumPosts: "No posts yet. Be the first to share!",
     loginToVote: "Log in to vote",
-    loginToPost: "Log in to share a photo",
+    loginToPost: "Log in to post",
+    imagesTab: "Best Image Reward",
+    topicsTab: "Topics",
+    competitionOpen: "Competition is open",
+    competitionClosed: "Competition is closed",
+    competitionEnds: "Ends",
+    competitionClosedMsg: "The competition is currently closed. Check back soon!",
+    competitionMyPending: "My pending entries",
+    pending: "Pending",
+    confirm: "Confirm",
+    dragImageHere: "Click or drag an image here",
+    photoReviewNotice: "Your photo will be reviewed by an admin before it goes public.",
+    photoUploadSuccess: "Photo uploaded! It will appear after admin approval.",
+    newTopic: "New Topic",
+    topicPlaceholder: "What would you like to discuss?",
+    postTopic: "Post Topic",
+    topicCreated: "Topic created!",
+    closed: "Closed",
+    noComments: "No comments yet.",
+    topicClosedMsg: "This topic is closed.",
+    loginToComment: "Log in to comment",
+    commentPlaceholder: "Write a comment…",
+    myPendingPhotos: "My pending photos",
+    loadMore: "Load more",
+    noTopics: "No topics yet.",
+    startTopic: "Start a topic",
+    allCategories: "All",
+    postDeleted: "Post deleted",
+    backToForum: "Back to Forum",
     catFood: "Food",
     catDailyLife: "Daily life",
     catTraditions: "Traditions",

@@ -3,6 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/site-header";
 import { KuwaitMap } from "@/components/kuwait-map";
+import { SEO } from "@/src/components/seo";
 import { GovernorateDetail } from "@/components/governorate-detail";
 import { ProgressStats } from "@/components/progress-stats";
 import { useLanguage } from "@/lib/language-context";
@@ -10,9 +11,16 @@ import { useProgress } from "@/lib/progress-context";
 import { GOVERNORATES } from "@/lib/kuwait-data";
 
 export function HomePage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { isExplored, markExplored, resetAll, state, derived } = useProgress();
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const seoTitle = lang === "ar"
+    ? "اكتشف الكويت — استكشف المحافظات الست"
+    : "Discover Kuwait — Interactive Map & Cultural Journey"
+  const seoDesc = lang === "ar"
+    ? "رحلة تفاعلية عبر محافظات الكويت الست — استكشف المعالم والتاريخ واجمع نقاط الاستكشاف."
+    : "An interactive journey through Kuwait's six governorates. Explore landmarks, history, and earn exploration points."
 
   const selected = useMemo(
     () => GOVERNORATES.find((g) => g.id === selectedId) ?? null,
@@ -28,6 +36,22 @@ export function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={seoTitle}
+        description={seoDesc}
+        canonical="https://discoverkuwait.org/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": seoTitle,
+          "description": seoDesc,
+          "url": "https://discoverkuwait.org/",
+          "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{ "@type": "ListItem", "position": 1, "name": lang === "ar" ? "الرئيسية" : "Home", "item": "https://discoverkuwait.org/" }]
+          }
+        }}
+      />
       <SiteHeader />
 
       {/* Hero */}
