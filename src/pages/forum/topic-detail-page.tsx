@@ -237,7 +237,11 @@ export function TopicDetailPage() {
               </div>
 
               {/* Content */}
-              <p dir="auto" className="text-base text-foreground leading-relaxed whitespace-pre-wrap">{topicData.description}</p>
+              <div
+                dir="auto"
+                className="text-base text-foreground leading-relaxed whitespace-pre-wrap [&_b]:font-bold [&_i]:italic [&_strong]:font-bold [&_em]:italic"
+                dangerouslySetInnerHTML={{ __html: topicData.description }}
+              />
 
               {/* Likes + comments count */}
               <div dir="ltr" className="mt-4 flex items-center gap-4">

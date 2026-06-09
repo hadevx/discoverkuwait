@@ -27,6 +27,7 @@ import {
   Lock,
   Trophy,
   CheckCircle2,
+  Pin,
 } from "lucide-react";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
@@ -80,15 +81,15 @@ type Topic = {
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-function timeAgo(date: string, lang: string) {
+function timeAgo(date: string) {
   const diff = Date.now() - new Date(date).getTime();
   const m = Math.floor(diff / 60000);
-  if (m < 1) return lang === "ar" ? "الآن" : "just now";
-  if (m < 60) return lang === "ar" ? `${m} د` : `${m}m`;
+  if (m < 1) return "just now";
+  if (m < 60) return `${m}m`;
   const h = Math.floor(m / 60);
-  if (h < 24) return lang === "ar" ? `${h} س` : `${h}h`;
+  if (h < 24) return `${h}h`;
   const d = Math.floor(h / 24);
-  return lang === "ar" ? `${d} ي` : `${d}d`;
+  return `${d}d`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -197,13 +198,13 @@ function ImageLightbox({ posts, initialIndex, userId, onVote, onClose, lang }: L
               {post.caption ? (
                 <p className="text-xs text-white/50 truncate max-w-60">{post.caption}</p>
               ) : (
-                <p className="text-[11px] text-white/30">{timeAgo(post.createdAt, lang)}</p>
+                <p className="text-[11px] text-white/30">{timeAgo(post.createdAt)}</p>
               )}
             </div>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             {post.caption && (
-              <span className="text-[11px] text-white/30">{timeAgo(post.createdAt, lang)}</span>
+              <span className="text-[11px] text-white/30">{timeAgo(post.createdAt)}</span>
             )}
             <button
               onClick={() => onVote(post._id)}
@@ -562,18 +563,23 @@ type TopicCardProps = {
 function TopicCard({ topic, userId, lang, onClick }: TopicCardProps) {
   const { t } = useLanguage();
   const liked = userId ? topic.likes.includes(userId) : false;
-  console.log(topic);
+  const isAdmin = topic.author?.isAdmin;
   return (
     <button
       onClick={onClick}
       dir="ltr"
-      className="w-full text-left flex gap-3 px-4 py-4 hover:bg-secondary/40 transition-colors duration-150">
+      className={cn(
+        "w-full text-left flex gap-3 px-4 py-4 transition-colors duration-150",
+        isAdmin
+          ? "bg-amber-500/5 hover:bg-amber-500/10 border-l-2 border-l-amber-400"
+          : "hover:bg-secondary/40",
+      )}>
       <div className="shrink-0 pt-0.5">
         {topic.author?.avatar ? (
           <img
             src={`/avatar/${topic.author.avatar}`}
             alt={topic.author.name}
-            className="size-10 rounded-full object-cover"
+            className="size-15 rounded-md object-cover"
           />
         ) : (
           <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold uppercase">
@@ -584,14 +590,18 @@ function TopicCard({ topic, userId, lang, onClick }: TopicCardProps) {
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 flex-wrap mb-1">
-          <div className="flex items-center   gap-1 ">
+          <div className="flex items-center gap-1">
             <span className="text-sm font-bold text-foreground">{topic.author?.name}</span>
-            {topic.author.isAdmin && <img src="/verify.png" className="size-4" alt="" />}
+            {isAdmin && <img src="/verify.png" className="size-4" alt="" />}
           </div>
+          {isAdmin && (
+            <span className="flex items-center gap-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 px-2 py-0.5 text-[11px] font-bold">
+              <Pin className="size-3" />
+              Pinned
+            </span>
+          )}
           <span className="text-xs text-muted-foreground">·</span>
-          <span className="text-xs text-muted-foreground shrink-0">
-            {timeAgo(topic.createdAt, lang)}
-          </span>
+          <span className="text-xs text-muted-foreground shrink-0">{timeAgo(topic.createdAt)}</span>
           {topic.isClosed && (
             <span className="flex items-center gap-1 rounded-full bg-zinc-500/15 text-zinc-500 dark:text-zinc-400 px-2 py-0.5 text-[11px] font-bold">
               <Lock className="size-3" />
@@ -601,7 +611,7 @@ function TopicCard({ topic, userId, lang, onClick }: TopicCardProps) {
         </div>
 
         <p dir="auto" className="text-sm text-foreground leading-relaxed line-clamp-3 mb-2">
-          {topic.description}
+          {topic.description.replace(/<[^>]*>/g, "")}
         </p>
 
         <div className="flex items-center justify-between gap-2">
@@ -613,22 +623,147 @@ function TopicCard({ topic, userId, lang, onClick }: TopicCardProps) {
             {catLabel(topic.category, lang)}
           </span>
           <div className="flex items-center gap-3 shrink-0">
-            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-              <MessageSquare className="size-3.5" />
+            <span className="flex items-center gap-1  text-muted-foreground">
+              <MessageSquare className="size-4" />
               {topic.commentCount ?? 0}
             </span>
             <span
               className={cn(
-                "flex items-center gap-1 text-xs font-medium",
+                "flex items-center gap-1  font-medium",
                 liked ? "text-rose-500" : "text-muted-foreground",
               )}>
-              <Heart className={cn("size-3.5", liked && "fill-rose-500")} />
+              <Heart className={cn("size-4", liked && "fill-rose-500")} />
               {topic.likes.length}
             </span>
           </div>
         </div>
       </div>
     </button>
+  );
+}
+
+// ─── Rich Text Editor ────────────────────────────────────────────────────────
+const RICH_COLORS = [
+  "#111827", "#ef4444", "#f97316", "#22c55e",
+  "#3b82f6", "#a855f7", "#ec4899", "#6b7280",
+];
+
+const RICH_SIZES = [
+  { label: "S", value: "12px", title: "Small" },
+  { label: "M", value: "15px", title: "Normal" },
+  { label: "L", value: "18px", title: "Large" },
+  { label: "XL", value: "22px", title: "Extra Large" },
+];
+
+function RichEditor({ onChange, placeholder }: { onChange: (html: string) => void; placeholder: string }) {
+  const editorRef = useRef<HTMLDivElement>(null);
+  const [boldActive, setBoldActive] = useState(false);
+  const [italicActive, setItalicActive] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
+
+  const sync = () => {
+    try {
+      setBoldActive(document.queryCommandState("bold"));
+      setItalicActive(document.queryCommandState("italic"));
+    } catch {}
+    setIsEmpty((editorRef.current?.textContent ?? "").trim() === "");
+    onChange(editorRef.current?.innerHTML ?? "");
+  };
+
+  const fmt = (e: React.MouseEvent, cmd: string, val?: string) => {
+    e.preventDefault();
+    editorRef.current?.focus();
+    document.execCommand(cmd, false, val);
+    sync();
+  };
+
+  const applySize = (e: React.MouseEvent, size: string) => {
+    e.preventDefault();
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount || sel.isCollapsed) return;
+    editorRef.current?.focus();
+    const range = sel.getRangeAt(0);
+    const span = document.createElement("span");
+    span.style.fontSize = size;
+    try {
+      range.surroundContents(span);
+    } catch {
+      const frag = range.extractContents();
+      span.appendChild(frag);
+      range.insertNode(span);
+    }
+    sel.removeAllRanges();
+    onChange(editorRef.current?.innerHTML ?? "");
+  };
+
+  return (
+    <div className="rounded-xl border border-border overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+      <div className="flex flex-wrap items-center gap-1 px-2 py-1.5 bg-secondary/50 border-b border-border">
+        <button
+          type="button"
+          onMouseDown={(e) => fmt(e, "bold")}
+          title="Bold"
+          className={cn(
+            "flex size-7 items-center justify-center rounded-md text-sm font-black transition-colors",
+            boldActive
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:text-foreground hover:bg-secondary",
+          )}>
+          B
+        </button>
+        <button
+          type="button"
+          onMouseDown={(e) => fmt(e, "italic")}
+          title="Italic"
+          className={cn(
+            "flex size-7 items-center justify-center rounded-md text-sm italic font-bold transition-colors",
+            italicActive
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:text-foreground hover:bg-secondary",
+          )}>
+          I
+        </button>
+        <div className="w-px h-4 bg-border mx-0.5 shrink-0" />
+        {RICH_SIZES.map((sz) => (
+          <button
+            key={sz.value}
+            type="button"
+            onMouseDown={(e) => applySize(e, sz.value)}
+            title={`${sz.title} — select text first`}
+            className="flex size-7 items-center justify-center rounded-md text-[10px] font-bold text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+            {sz.label}
+          </button>
+        ))}
+        <div className="w-px h-4 bg-border mx-0.5 shrink-0" />
+        {RICH_COLORS.map((color) => (
+          <button
+            key={color}
+            type="button"
+            onMouseDown={(e) => fmt(e, "foreColor", color)}
+            title={color}
+            style={{ backgroundColor: color }}
+            className="w-4 h-4 rounded-full border border-white/20 hover:scale-110 transition-transform shrink-0"
+          />
+        ))}
+      </div>
+      <div className="relative">
+        {isEmpty && (
+          <span className="absolute top-2.5 left-4 text-sm text-muted-foreground pointer-events-none select-none">
+            {placeholder}
+          </span>
+        )}
+        <div
+          ref={editorRef}
+          contentEditable
+          suppressContentEditableWarning
+          onInput={sync}
+          onKeyUp={sync}
+          onMouseUp={sync}
+          className="min-h-30 px-4 py-2.5 text-sm text-foreground outline-none"
+          style={{ wordBreak: "break-word" }}
+        />
+      </div>
+    </div>
   );
 }
 
@@ -646,13 +781,14 @@ function NewTopicModal({ onClose, onSuccess, lang, t, userId: _userId }: NewTopi
   const [category, setCategory] = useState("");
   const [createTopic, { isLoading: submitting }] = useCreateTopicMutation();
 
-  const canSubmit = description.trim().length > 0 && category.length > 0 && !submitting;
+  const strippedDesc = description.replace(/<[^>]*>/g, "").trim();
+  const canSubmit = strippedDesc.length > 0 && category.length > 0 && !submitting;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!canSubmit) return;
     try {
-      const topic = await createTopic({ description: description.trim(), category }).unwrap();
+      const topic = await createTopic({ description, category }).unwrap();
       onSuccess(topic as Topic);
       onClose();
       toast.success(t.topicCreated);
@@ -677,15 +813,7 @@ function NewTopicModal({ onClose, onSuccess, lang, t, userId: _userId }: NewTopi
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 flex flex-col gap-4">
-          <textarea
-            placeholder={t.topicPlaceholder}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={5}
-            maxLength={1000}
-            dir="auto"
-            className="w-full resize-none rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground"
-          />
+          <RichEditor onChange={setDescription} placeholder={t.topicPlaceholder} />
 
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map((cat) => (
@@ -858,12 +986,14 @@ export function ForumPage() {
     recordActivity();
   };
 
-  const seoTitle = lang === "ar"
-    ? "المنتدى والمسابقة | اكتشف الكويت"
-    : "Forum & Photo Competition | Discover Kuwait"
-  const seoDesc = lang === "ar"
-    ? "شارك في مسابقة تصوير الكويت، اطّلع على مواضيع المجتمع وشارك بتجاربك وآرائك."
-    : "Join Kuwait's photo competition, explore community topics, and share your experiences and opinions."
+  const seoTitle =
+    lang === "ar"
+      ? "المنتدى والمسابقة | اكتشف الكويت"
+      : "Forum & Photo Competition | Discover Kuwait";
+  const seoDesc =
+    lang === "ar"
+      ? "شارك في مسابقة تصوير الكويت، اطّلع على مواضيع المجتمع وشارك بتجاربك وآرائك."
+      : "Join Kuwait's photo competition, explore community topics, and share your experiences and opinions.";
 
   return (
     <div className="min-h-screen bg-background" dir={dir}>

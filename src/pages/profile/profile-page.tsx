@@ -44,7 +44,7 @@ import { SEO } from "@/src/components/seo";
 // All selectable avatars from /public/avatar/
 const AVATARS = [
   1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-  28, 30,
+  28, 29, 30, 31, 32, 33,
 ].map((n) => `${n}.webp`);
 
 const BADGE_ICONS: Record<string, LucideIcon> = {
@@ -155,7 +155,11 @@ export function ProfilePage() {
     <div className="min-h-screen bg-background">
       <SEO
         title={lang === "ar" ? "ملفي الشخصي | اكتشف الكويت" : "My Profile | Discover Kuwait"}
-        description={lang === "ar" ? "تقدّمك، إنجازاتك، ونقاطك في رحلة اكتشاف الكويت." : "Your progress, achievements, and points in the Discover Kuwait journey."}
+        description={
+          lang === "ar"
+            ? "تقدّمك، إنجازاتك، ونقاطك في رحلة اكتشاف الكويت."
+            : "Your progress, achievements, and points in the Discover Kuwait journey."
+        }
         noindex
       />
       <SiteHeader />
