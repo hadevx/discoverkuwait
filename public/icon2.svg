@@ -1,0 +1,22 @@
+<svg width="100%" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Discover Kuwait dhow logo</title>
+  <desc>A teal circular logo with a cream traditional dhow above a Sadu triangle band</desc>
+  <rect width="400" height="400" fill="#000000"/>
+  <circle cx="200" cy="200" r="190" fill="#086a73"/>
+  <g fill="#F2E8D5">
+    <path d="M194 124 C164 158, 158 210, 166 250 L194 250 Z"/>
+    <path d="M206 108 C256 145, 268 205, 250 250 L206 250 Z"/>
+    <rect x="197" y="104" width="6" height="146" rx="3"/>
+    <circle cx="200" cy="101" r="5.5"/>
+    <path d="M110 252 C150 286, 250 286, 290 252 C250 270, 150 270, 110 252 Z"/>
+  </g>
+  <g fill="#F2E8D5">
+    <path d="M115 296 L127 276 L139 296 Z"/>
+    <path d="M139 296 L151 276 L163 296 Z"/>
+    <path d="M163 296 L175 276 L187 296 Z"/>
+    <path d="M187 296 L199 276 L211 296 Z"/>
+    <path d="M211 296 L223 276 L235 296 Z"/>
+    <path d="M235 296 L247 276 L259 296 Z"/>
+    <path d="M259 296 L271 276 L283 296 Z"/>
+  </g>
+</svg>

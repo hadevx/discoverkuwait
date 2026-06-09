@@ -1,5 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
-import { Languages, MapPin, Brain, BookOpen, User, Moon, Sun, Gem, Menu, Images, Flame } from "lucide-react";
+import {
+  Languages,
+  MapPin,
+  Brain,
+  BookOpen,
+  User,
+  Moon,
+  Sun,
+  Gem,
+  Menu,
+  Images,
+  Flame,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -8,6 +20,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/language-context";
 import { useProgress } from "@/lib/progress-context";
+import logo from "/logo2.png";
 
 export function SiteHeader() {
   const { t, dir, toggleLang } = useLanguage();
@@ -60,7 +73,8 @@ export function SiteHeader() {
         {/* Logo */}
         <Link to="/" className="flex shrink-0 items-center gap-2.5">
           <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-            <MapPin className="size-4" aria-hidden="true" />
+            {/* <MapPin className="size-4" aria-hidden="true" /> */}
+            <img src={logo} alt="" className="rounded-md" />
           </div>
           <div className=" leading-tight sm:block">
             <p className="text-sm font-bold tracking-tight text-foreground">{t.brand}</p>
