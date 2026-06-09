@@ -11,7 +11,7 @@ import { useProgress, POINTS } from "@/lib/progress-context"
 import { getQuizQuestions, type QuizQuestion } from "@/lib/quiz-data"
 
 const API_BASE =
-  import.meta.env.VITE_ENVIRONMENT === "development"
+  import.meta.env.DEV
     ? import.meta.env.VITE_API_LOCALHOST
     : import.meta.env.VITE_API_URL
 

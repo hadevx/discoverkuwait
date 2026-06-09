@@ -5,7 +5,7 @@ import { GOVERNORATES } from "@/lib/kuwait-data";
 
 const STORAGE_KEY = "dk-progress-v1";
 const API_BASE =
-  import.meta.env.VITE_ENVIRONMENT === "development"
+  import.meta.env.DEV
     ? import.meta.env.VITE_API_LOCALHOST
     : import.meta.env.VITE_API_URL;
 

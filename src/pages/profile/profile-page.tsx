@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const API_BASE =
-  import.meta.env.VITE_ENVIRONMENT === "development"
+  import.meta.env.DEV
     ? import.meta.env.VITE_API_LOCALHOST
     : import.meta.env.VITE_API_URL;
 import {

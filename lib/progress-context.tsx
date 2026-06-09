@@ -10,7 +10,7 @@ import {
 import { GOVERNORATES } from "@/lib/kuwait-data";
 
 const API_BASE =
-  import.meta.env.VITE_ENVIRONMENT === "development"
+  import.meta.env.DEV
     ? import.meta.env.VITE_API_LOCALHOST
     : import.meta.env.VITE_API_URL;
 

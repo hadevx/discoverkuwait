@@ -16,7 +16,7 @@ const UsersPage       = lazy(() => import("@/src/pages/users/UsersPage").then((m
 const MaintenancePage = lazy(() => import("@/src/pages/maintenance/maintenance-page").then((m) => ({ default: m.MaintenancePage })));
 
 const API_BASE =
-  import.meta.env.VITE_ENVIRONMENT === "development"
+  import.meta.env.DEV
     ? import.meta.env.VITE_API_LOCALHOST
     : import.meta.env.VITE_API_URL;
 
