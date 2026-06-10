@@ -122,6 +122,12 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
+  /* Prevent iOS auto-zoom on focused inputs */
+  @media (max-width: 768px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+  }
 }
 
 @layer utilities {

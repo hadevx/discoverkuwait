@@ -70,9 +70,9 @@ function Avatar({ author, size = "md" }: { author: Author; size?: "sm" | "md" | 
   const cls = size === "sm" ? "size-7" : size === "lg" ? "size-10" : "size-8";
   return author?.avatar ? (
     <img src={`/avatar/${author.avatar}`} alt={author.name}
-      className={`${cls} rounded-full object-cover shrink-0`} />
+      className={`${cls} rounded-md object-cover shrink-0`} />
   ) : (
-    <div className={`${cls} shrink-0 flex items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold uppercase`}>
+    <div className={`${cls} shrink-0 flex items-center justify-center rounded-md bg-primary text-primary-foreground text-xs font-bold uppercase`}>
       {author?.name?.[0] ?? "?"}
     </div>
   );
@@ -213,10 +213,10 @@ export function TopicDetailPage() {
               className="text-sm text-primary underline">{t.backToForum}</button>
           </div>
         ) : (
-          <div className="flex flex-col gap-0 rounded-2xl border border-border bg-card overflow-hidden shadow-sm">
+          <div className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
 
-            {/* Topic header */}
-            <div className="px-5 py-5 border-b border-border">
+            {/* ── Post ── */}
+            <div className="px-5 py-5">
               {/* Author row — always LTR so avatar stays left */}
               <div dir="ltr" className="flex items-center gap-2.5 mb-3">
                 <Avatar author={topicData.author} size="md" />
@@ -261,9 +261,13 @@ export function TopicDetailPage() {
               </div>
             </div>
 
-            {/* Comments section */}
-            <div className="border-t border-border">
-              <div className="px-5 pt-4 pb-2">
+            {/* ── Separator ── */}
+            <div className="mx-5 h-px bg-border/40" />
+
+            {/* ── Comments ── */}
+            <div>
+
+              <div className="px-5 pt-4 pb-3">
                 <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
                   {lang === "ar"
                     ? `${topicData.comments.length} تعليق`
@@ -274,7 +278,7 @@ export function TopicDetailPage() {
               {topicData.comments.length === 0 ? (
                 <p className="text-sm text-muted-foreground text-center py-8">{t.noComments}</p>
               ) : (
-                <div className="divide-y divide-border">
+                <div className="divide-y divide-border/60">
                   {topicData.comments.map((c) => (
                     <div key={c._id} dir="ltr" className="flex gap-3 px-5 py-4 group/comment hover:bg-secondary/20 transition-colors">
                       <Avatar author={c.author} size="md" />
@@ -305,54 +309,56 @@ export function TopicDetailPage() {
                   ))}
                 </div>
               )}
-            </div>
 
-            {/* Comment input */}
-            <div className="border-t border-border px-5 py-4">
-              {topicData.isClosed ? (
-                <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1.5">
-                  <Lock className="size-3.5" /> {t.topicClosedMsg}
-                </p>
-              ) : !userInfo ? (
-                <button onClick={() => setLoginOpen(true)}
-                  className="w-full rounded-xl border border-dashed border-border py-2.5 text-sm text-muted-foreground hover:border-primary hover:text-primary transition-colors">
-                  {t.loginToComment}
-                </button>
-              ) : (
-                <div className="flex flex-col gap-2">
-                  {replyTo && (
-                    <div dir="ltr" className="flex items-center justify-between rounded-lg bg-primary/8 border border-primary/20 px-3 py-1.5">
-                      <span className="text-xs text-primary font-semibold">
-                        {lang === "ar" ? `رد على @${replyTo}` : `Replying to @${replyTo}`}
-                      </span>
-                      <button onClick={handleCancelReply}
-                        className="flex size-4 items-center justify-center rounded-full text-primary/60 hover:text-primary transition-colors">
-                        <X className="size-3" />
+              {/* Comment input */}
+              <div className="px-5 py-4 bg-muted/30">
+                {topicData.isClosed ? (
+                  <p className="text-xs text-muted-foreground text-center flex items-center justify-center gap-1.5">
+                    <Lock className="size-3.5" /> {t.topicClosedMsg}
+                  </p>
+                ) : !userInfo ? (
+                  <button onClick={() => setLoginOpen(true)}
+                    className="w-full rounded-xl border border-dashed border-border py-2.5 text-sm text-muted-foreground hover:border-primary hover:text-primary transition-colors">
+                    {t.loginToComment}
+                  </button>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    {replyTo && (
+                      <div dir="ltr" className="flex items-center justify-between rounded-lg bg-primary/8 border border-primary/20 px-3 py-1.5">
+                        <span className="text-xs text-primary font-semibold">
+                          {lang === "ar" ? `رد على @${replyTo}` : `Replying to @${replyTo}`}
+                        </span>
+                        <button onClick={handleCancelReply}
+                          className="flex size-4 items-center justify-center rounded-full text-primary/60 hover:text-primary transition-colors">
+                          <X className="size-3" />
+                        </button>
+                      </div>
+                    )}
+                    <form onSubmit={handleAddComment} dir="ltr" className="flex gap-2">
+                      <input
+                        ref={commentInputRef}
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        placeholder={t.commentPlaceholder}
+                        dir="auto"
+                        maxLength={500}
+                        className="flex-1 rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-muted-foreground"
+                      />
+                      <button
+                        type="submit"
+                        disabled={!commentText.trim() || submitting}
+                        className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors shrink-0">
+                        {submitting ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
                       </button>
-                    </div>
-                  )}
-                  <form onSubmit={handleAddComment} dir="ltr" className="flex gap-2">
-                    <input
-                      ref={commentInputRef}
-                      value={commentText}
-                      onChange={(e) => setCommentText(e.target.value)}
-                      placeholder={t.commentPlaceholder}
-                      dir="auto"
-                      maxLength={500}
-                      className="flex-1 rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-muted-foreground"
-                    />
-                    <button
-                      type="submit"
-                      disabled={!commentText.trim() || submitting}
-                      className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors shrink-0">
-                      {submitting ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
-                    </button>
-                  </form>
-                </div>
-              )}
+                    </form>
+                  </div>
+                )}
+              </div>
+
             </div>
 
           </div>
+
         )}
       </main>
 

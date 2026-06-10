@@ -1054,7 +1054,7 @@ export function ForumPage() {
 
       <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
         {/* ── Tab bar ── */}
-        <div className="flex items-center justify-between gap-4 mb-8">
+        <div className="flex items-center justify-between gap-4 mb-4">
           <div className="flex gap-1 rounded-xl bg-secondary p-1">
             <button
               onClick={() => setTab("topics")}
@@ -1080,41 +1080,67 @@ export function ForumPage() {
             </button>
           </div>
 
-          {/* Action button */}
-          {tab === "topics" ? (
-            userInfo ? (
-              <button
-                onClick={() => setNewTopicOpen(true)}
-                className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm">
-                <Plus className="size-4" />
-                {t.newTopic}
-              </button>
-            ) : (
-              <button
-                onClick={() => setLoginOpen(true)}
-                className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
-                <Plus className="size-4" />
-                {t.loginToPost}
-              </button>
-            )
-          ) : competition?.isOpen ? (
-            userInfo ? (
-              <button
-                onClick={() => setUploadOpen(true)}
-                className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm">
-                <ImagePlus className="size-4" />
-                {t.sharePhoto}
-              </button>
-            ) : (
-              <button
-                onClick={() => setLoginOpen(true)}
-                className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
-                <Plus className="size-4" />
-                {t.loginToPost}
-              </button>
-            )
-          ) : null}
+          {/* Action buttons — desktop only (hidden on mobile) */}
+          {tab === "topics" && userInfo && (
+            <button
+              onClick={() => setNewTopicOpen(true)}
+              className="hidden sm:flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm">
+              <Plus className="size-4" />
+              {t.newTopic}
+            </button>
+          )}
+          {tab === "images" && competition?.isOpen && userInfo && (
+            <button
+              onClick={() => setUploadOpen(true)}
+              className="hidden sm:flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm">
+              <ImagePlus className="size-4" />
+              {t.sharePhoto}
+            </button>
+          )}
         </div>
+
+        {/* ── Below-tabs row — mobile only ── */}
+        <div className="sm:hidden mb-6">
+          {userInfo ? (
+            <>
+              {tab === "topics" && (
+                <button
+                  onClick={() => setNewTopicOpen(true)}
+                  className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm">
+                  <Plus className="size-4" />
+                  {t.newTopic}
+                </button>
+              )}
+              {tab === "images" && competition?.isOpen && (
+                <button
+                  onClick={() => setUploadOpen(true)}
+                  className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm">
+                  <ImagePlus className="size-4" />
+                  {t.sharePhoto}
+                </button>
+              )}
+            </>
+          ) : (
+            <button
+              onClick={() => setLoginOpen(true)}
+              className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+              <Plus className="size-4" />
+              {t.loginToPost}
+            </button>
+          )}
+        </div>
+
+        {/* ── Login prompt — desktop only, guest only ── */}
+        {!userInfo && (
+          <div className="hidden sm:block mb-6">
+            <button
+              onClick={() => setLoginOpen(true)}
+              className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+              <Plus className="size-4" />
+              {t.loginToPost}
+            </button>
+          </div>
+        )}
 
         {/* ══ IMAGES TAB ══════════════════════════════════════════════════════ */}
         {tab === "images" && (
