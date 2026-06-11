@@ -17,7 +17,7 @@ import {
 } from "@/src/redux/queries/forumApi";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Author = { _id: string; name: string; avatar: string };
+type Author = { _id: string; name: string; avatar: string; isAdmin?: boolean };
 
 type Comment = {
   _id: string;
@@ -221,7 +221,12 @@ export function TopicDetailPage() {
               <div dir="ltr" className="flex items-center gap-2.5 mb-3">
                 <Avatar author={topicData.author} size="md" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-foreground">{topicData.author?.name}</p>
+                  <p className="text-sm font-bold text-foreground flex items-center gap-1">
+                    {topicData.author?.name}
+                    {topicData.author?.isAdmin && (
+                      <img src="/verify.png" alt="verified" className="size-4 inline-block" />
+                    )}
+                  </p>
                   <p className="text-[11px] text-muted-foreground">{timeAgo(topicData.createdAt, lang)}</p>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
@@ -284,7 +289,12 @@ export function TopicDetailPage() {
                       <Avatar author={c.author} size="md" />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-baseline gap-2 mb-1">
-                          <span className="text-sm font-bold text-foreground leading-none">{c.author?.name}</span>
+                          <span className="text-sm font-bold text-foreground leading-none flex items-center gap-1">
+                            {c.author?.name}
+                            {c.author?.isAdmin && (
+                              <img src="/verify.png" alt="verified" className="size-4 inline-block" />
+                            )}
+                          </span>
                           <span className="text-[11px] text-muted-foreground shrink-0">{timeAgo(c.createdAt, lang)}</span>
                         </div>
                         <p dir="auto" className="text-sm text-foreground leading-relaxed whitespace-pre-wrap wrap-break-word">
