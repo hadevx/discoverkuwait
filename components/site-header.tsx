@@ -20,7 +20,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/language-context";
 import { useProgress } from "@/lib/progress-context";
-import logo from "/logo2.png";
+import logo from "/logo.png";
 
 export function SiteHeader() {
   const { t, dir, toggleLang } = useLanguage();
