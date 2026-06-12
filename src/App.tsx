@@ -20,11 +20,36 @@ const API_BASE =
     ? import.meta.env.VITE_API_LOCALHOST
     : import.meta.env.VITE_API_URL;
 
+type FeatureFlags = {
+  quizEnabled: boolean;
+  forumEnabled: boolean;
+  dictionaryEnabled: boolean;
+  leaderboardEnabled: boolean;
+};
+
+const DEFAULT_FLAGS: FeatureFlags = {
+  quizEnabled: true,
+  forumEnabled: true,
+  dictionaryEnabled: true,
+  leaderboardEnabled: true,
+};
+
+function FeatureOffPage() {
+  return (
+    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 text-center px-4">
+      <p className="text-4xl">🚧</p>
+      <p className="text-lg font-bold text-foreground">This feature is currently unavailable</p>
+      <p className="text-sm text-muted-foreground">Check back soon — the admin has temporarily disabled it.</p>
+    </div>
+  );
+}
+
 export function App() {
   const [siteStatus, setSiteStatus] = useState<"active" | "maintenance" | null>(null);
   const [banner, setBanner] = useState("");
   const [bannerBg, setBannerBg] = useState("#18181b");
   const [bannerTextColor, setBannerTextColor] = useState("#ffffff");
+  const [flags, setFlags] = useState<FeatureFlags>(DEFAULT_FLAGS);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/update-store-status`)
@@ -36,6 +61,12 @@ export function App() {
           setBanner(store.banner?.trim() ?? "");
           setBannerBg(store.bannerBg ?? "#18181b");
           setBannerTextColor(store.bannerTextColor ?? "#ffffff");
+          setFlags({
+            quizEnabled: store.quizEnabled !== false,
+            forumEnabled: store.forumEnabled !== false,
+            dictionaryEnabled: store.dictionaryEnabled !== false,
+            leaderboardEnabled: store.leaderboardEnabled !== false,
+          });
         } else {
           setSiteStatus("active");
         }
@@ -59,12 +90,12 @@ export function App() {
                 )}
                 <Routes>
                   <Route path="/"                  element={<HomePage />} />
-                  <Route path="/quiz"              element={<QuizPage />} />
-                  <Route path="/dictionary"        element={<DictionaryPage />} />
+                  <Route path="/quiz"              element={flags.quizEnabled       ? <QuizPage />       : <FeatureOffPage />} />
+                  <Route path="/dictionary"        element={flags.dictionaryEnabled ? <DictionaryPage /> : <FeatureOffPage />} />
                   <Route path="/profile"           element={<ProfilePage />} />
-                  <Route path="/forum"             element={<ForumPage />} />
-                  <Route path="/forum/topics/:id"  element={<TopicDetailPage />} />
-                  <Route path="/users"             element={<UsersPage />} />
+                  <Route path="/forum"             element={flags.forumEnabled      ? <ForumPage />      : <FeatureOffPage />} />
+                  <Route path="/forum/topics/:id"  element={flags.forumEnabled      ? <TopicDetailPage /> : <FeatureOffPage />} />
+                  <Route path="/users"             element={flags.leaderboardEnabled ? <UsersPage />     : <FeatureOffPage />} />
                 </Routes>
               </>
             )}
