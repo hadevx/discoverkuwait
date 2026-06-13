@@ -73,9 +73,9 @@ export function SiteHeader() {
         {/* Logo */}
         <Link to="/" className="flex shrink-0 items-center gap-2.5">
           <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-            {/* <MapPin className="size-4" aria-hidden="true" /> */}
             <img src={logo} alt="" className="rounded-md" />
           </div>
+
           <div className=" leading-tight sm:block">
             <p className="text-sm font-bold tracking-tight text-foreground">{t.brand}</p>
             <p className="text-xs text-muted-foreground">{t.brandSub}</p>
